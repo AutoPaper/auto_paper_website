@@ -79,9 +79,9 @@ namespace AutoPaper.Models
     {
         public int ID { get; set; }
         public string questionAddr { get; set; }
-        public string answer { get; set; }
         public int questionType { get; set; }
         public int difficulty { get; set; }
+        public int citation { get; set; }
     }
     public class QK
     {

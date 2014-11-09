@@ -14,14 +14,26 @@ namespace AutoPaper.Controllers
     {
         private PaperShareDBContext db = new PaperShareDBContext();
 
-        // GET: /CreatePaperOrQuestion/
         public ActionResult Index()
         {
             return View();
         }
-        public ActionResult AssembleInfo()
+        [HttpPost]
+        public ActionResult AssembleResult()
         {
-            return RedirectToAction("Index");
+            var knowledge_value = Request.Form["assemble-knowledge-value"];
+            var choice_count = Request.Form["assemble-paper-choice-count"];
+            var choice_score = Request.Form["assemble-paper-choice-score"];
+            var choice_order = Request.Form["assemble-paper-choice-order"];
+            var blanks_count = Request.Form["assemble-paper-fill-in-blanks-count"];
+            var blanks_score = Request.Form["assemble-paper-fill-in-blanks-score"];
+            var blanks_order = Request.Form["assemble-paper-fill-in-blanks-order"];
+            var judge_count = Request.Form["assemble-paper-judge-count"];
+            var judge_score = Request.Form["assemble-paper-judge-score"];
+            var judge_order = Request.Form["assemble-paper-judge-order"];
+
+            var v = from q in db.question_table where q.questionType == 1 select q;
+            return View();
         }
 	}
 }

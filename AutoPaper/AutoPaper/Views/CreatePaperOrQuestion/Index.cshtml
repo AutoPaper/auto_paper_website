@@ -14,13 +14,14 @@
         <img style="margin-left: 50px; opacity: 0.3; " src="~/PicRes/assemble-extend.png" />
     </div>
 </div>
-<div id="assemble-content" class="col-md-9" style="height: auto; background-color: #f7f7f7; padding-left: 0px; padding-right: 0px; padding-bottom: 80px; ">
-    <div style="width: 300px; height: 75px; background-color: #c1f0c1; text-align: center; margin-top: 20px; margin-left: 0px; ">
-        <h2 style="font-family: 微软雅黑; padding-top: 20px; ">组  卷  系  统</h2>
-    </div>
-    @using (Html.BeginForm("AssembleInfo", "CreatePaperOrQuestion", FormMethod.Post))
+<div id="assemble-content" class="col-md-9" style="height: auto; background-color: #f7f7f7; padding-left: 0px; padding-right: 0px; padding-bottom: 40px; ">
+    @using (Html.BeginForm("AssembleResult", "CreatePaperOrQuestion", FormMethod.Post))
     {
         @Html.AntiForgeryToken()
+        @Html.ValidationSummary()
+        <div style="width: 300px; height: 75px; background-color: #c1f0c1; text-align: center; margin-top: 20px; margin-left: 0px; ">
+            <h2 style="font-family: 微软雅黑; padding-top: 20px; ">组  卷  系  统</h2>
+        </div>
         <div class="assemble-col" style="height: auto; background-color: #e6e6e6; padding-right: 0px; margin-top: 40px; ">
             <h4 class="col-md-3" style="font-family: 微软雅黑; font-weight: 600;">考点设置</h4>
             <div onclick="collapse_Extend1()" class="btn-extend"><h4 id="assemble-btn-extend1" style="text-align: center;">-</h4></div>
@@ -37,29 +38,21 @@
                 <div class="col-md-3" style="text-align: center; background-color: #cfcfcf; height: auto; padding: 0px; margin-right: 5px; ">
                     <h4 style="font-family: 微软雅黑; background-color: #b9b9b9; margin: 0px; width: 100%; padding-top: 10px; padding-bottom: 10px; ">一级目录</h4>
                     <ul class="nav nav-knowledge-select">
-                        <li><a href="#">集合</a></li>
-                        <li><a href="#">函数</a></li>
-                        <li><a href="#">向量</a></li>
-                        <li><a href="#">数列</a></li>
+                        <li><a>集合</a></li>
+                        <li><a>命题</a></li>
+                        <li><a>函数与映射</a></li>
+                        <li><a>数列</a></li>
+                        <li><a>不等式</a></li>
+                        <li><a>排列组合</a></li>
                     </ul>
                 </div>
                 <div class="col-md-3" style="text-align: center; background-color: #cfcfcf; height: auto; padding: 0px; margin-right: 5px; ">
                     <h4 style="font-family: 微软雅黑; background-color: #b9b9b9; margin: 0px; width: 100%; padding-top: 10px; padding-bottom: 10px; ">二级目录</h4>
-                    <ul class="nav nav-knowledge-select">
-                        <li><a href="#">集合间的运算关系</a></li>
-                        <li><a href="#">函数</a></li>
-                        <li><a href="#">向量</a></li>
-                        <li><a href="#">数列</a></li>
-                    </ul>
+                    <ul class="nav nav-knowledge-select" id="assemble-knowledge-secondlist" style="height: 240px; overflow: auto;"></ul>
                 </div>
                 <div class="col-md-3" style="text-align: center; background-color: #cfcfcf; height: auto; padding: 0px; margin-right: 5px; ">
                     <h4 style="font-family: 微软雅黑; background-color: #b9b9b9; margin: 0px; width: 100%; padding-top: 10px; padding-bottom: 10px; ">三级目录</h4>
-                    <ul class="nav nav-knowledge-select">
-                        <li><a href="#">集合</a></li>
-                        <li><a href="#">函数</a></li>
-                        <li><a href="#">向量</a></li>
-                        <li><a href="#">数列</a></li>
-                    </ul>
+                    <ul class="nav nav-knowledge-select" id="assemble-knowledge-secondlist" style="height: 240px; overflow: auto;"></ul>
                 </div>
                 <div style="float: left; width: 22%; text-align: center; ">
                     <div id="assemble-knowledge-add" class="assemble-knowledge-add"><h4>添 加</h4></div>
@@ -80,7 +73,7 @@
             <div class="form-group" style="margin-top: 20px; text-align: center;">
                 <label for="assemble-paper-total-score" class="col-sm-2 control-label" style="font-family: 微软雅黑; font-size: 18px; font-weight: 400; background-color: #b9b9b9; padding: 10px 20px 10px 20px; ">卷 名</label>
                 <div class="col-sm-10">
-                    <input type="text" class="form-control" id="assemble-paper-total-score" style="margin-top: 5px;" placeholder="请输入试卷名">
+                    <input type="text" class="form-control" id="assemble-paper-name" style="margin-top: 5px;" placeholder="请输入试卷名">
                 </div>
             </div>
             <div class="col-sm-12"></div>
@@ -88,7 +81,7 @@
                 <label class="control-label col-sm-2" style="margin-top: 20px; font-family: 微软雅黑; font-size: 18px; font-weight: 400; background-color: #b9b9b9; padding: 10px 20px 10px 20px; ">题 目</label>
                 <p class="col-sm-6" style="margin-top: 20px; margin-left: 110px; font-family: 微软雅黑; color: #777777; font-size: 18px; font-weight: 400; background-color: #d3d3d3; padding: 10px 20px 10px 20px; ">分数总和为：0</p>
                 <div class="form-group" style="text-align: center;">
-                    <div class="col-sm-offset-4 col-sm-2" style="margin-top: 10px; ">
+                    <div class="col-sm-offset-3 col-sm-2" style="margin-top: 10px; ">
                         <div class="checkbox">
                             <label style="font-family: 微软雅黑; font-size: 18px; font-weight: 400;">
                                 <input type="checkbox" id="assemble-paper-choice-bool" style="margin-top: 7px;"> 选择题
@@ -101,10 +94,13 @@
                     <div class=" col-sm-2" style="margin-top: 15px;">
                         <input class="form-control" type="number" id="assemble-paper-choice-score" title="每题的分值" placeholder="分值">
                     </div>
+                    <div class=" col-sm-2" style="margin-top: 15px;">
+                        <input class="form-control" type="number" id="assemble-paper-choice-order" title="确定本类型题目在试卷中是第几大题" placeholder="次序">
+                    </div>
                 </div>
                 <div class="col-sm-12"></div>
                 <div class="form-group" style="margin-top: 20px; text-align: center;">
-                    <div class="col-sm-offset-4 col-sm-2">
+                    <div class="col-sm-offset-3 col-sm-2">
                         <div class="checkbox">
                             <label style="font-family: 微软雅黑; font-size: 18px; font-weight: 400;">
                                 <input type="checkbox" id="assemble-paper-fill-in-blanks-bool" style="margin-top: 7px;"> 填空题
@@ -117,10 +113,13 @@
                     <div class=" col-sm-2" style="margin-top: 7px;">
                         <input class="form-control" type="number" id="assemble-paper-fill-in-blanks-score" title="每题的分值" placeholder="分值">
                     </div>
+                    <div class=" col-sm-2" style="margin-top: 7px;">
+                        <input class="form-control" type="number" id="assemble-paper-fill-in-blanks-order" title="确定本类型题目在试卷中是第几大题" placeholder="次序">
+                    </div>
                 </div>
                 <div class="col-sm-12"></div>
                 <div class="form-group" style="margin-top: 20px; text-align: center;">
-                    <div class="col-sm-offset-4 col-sm-2">
+                    <div class="col-sm-offset-3 col-sm-2">
                         <div class="checkbox">
                             <label style="font-family: 微软雅黑; font-size: 18px; font-weight: 400;">
                                 <input type="checkbox" id="assemble-paper-judge-bool" style="margin-top: 7px;"> 判断题
@@ -133,10 +132,13 @@
                     <div class=" col-sm-2" style="margin-top: 7px;">
                         <input class="form-control" type="number" id="assemble-paper-judge-score" title="每题的分值" placeholder="分值">
                     </div>
+                    <div class=" col-sm-2" style="margin-top: 7px;">
+                        <input class="form-control" type="number" id="assemble-paper-judge-order" title="确定本类型题目在试卷中是第几大题" placeholder="次序">
+                    </div>
                 </div>
                 <div class="col-sm-12"></div>
                 <div class="form-group" style="margin-top: 20px; text-align: center;">
-                    <div class="col-sm-offset-4 col-sm-2" style="margin-bottom: 20px;">
+                    <div class="col-sm-offset-3 col-sm-2" style="margin-bottom: 20px;">
                         <div class="checkbox">
                             <label style="font-family: 微软雅黑; font-size: 18px; font-weight: 400;">
                                 <input type="checkbox" id="assemble-paper-synthesize-bool" style="margin-top: 7px;"> 解答题
@@ -149,15 +151,48 @@
                     <div class=" col-sm-2" style="margin-top: 7px;">
                         <input class="form-control" type="number" id="assemble-paper-synthesize-score" title="每题的分值" placeholder="分值">
                     </div>
+                    <div class=" col-sm-2" style="margin-top: 7px;">
+                        <input class="form-control" type="number" id="assemble-paper-synthesize-order" title="确定本类型题目在试卷中是第几大题" placeholder="次序">
+                    </div>
                 </div>
             </div>
         </div>
         <div class="assemble-col" style="height: auto; background-color: #e6e6e6; padding-right: 0px; margin-top: 40px; ">
             <h4 class="col-md-3" style="font-family: 微软雅黑; font-weight: 600;">难度分布设置</h4>
-            <div onclick="collapse_Extend1()" class="btn-extend"><h4 id="assemble-btn-extend3" style="text-align: center;">-</h4></div>
+            <div onclick="collapse_Extend3()" class="btn-extend"><h4 id="assemble-btn-extend3" style="text-align: center;">-</h4></div>
         </div>
-        <div id="assemble-hardness-setting " class="assemble-col" style="height: auto; background-color: #e6e6e6;">
-
+        <div id="assemble-hardness-setting" class="assemble-col" style="height: auto; background-color: #e6e6e6;">
+        <div class="form-group" style="margin-top: 20px; text-align: center; ">
+            <label class="col-sm-3 control-label" style="font-family: 微软雅黑; font-size: 18px; font-weight: 400; background-color: #b9b9b9; padding: 10px 20px 10px 20px; ">简单题占比</label>
+            <label class="col-sm-1 control-label" style="font-family: 微软雅黑; font-size: 18px; font-weight: 400; background-color: #d3d3d3; padding: 10px 20px 10px 20px; ">0</label>
+            <div class="col-sm-7" style="padding-top: 15px;">
+                <input type="range" id="assemble-hardness-easy" />
+            </div>
+        </div>
+        <div class="col-sm-12"></div>
+        <div class="form-group" style="margin-top: 20px; text-align: center; ">
+            <label class="col-sm-3 control-label" style="font-family: 微软雅黑; font-size: 18px; font-weight: 400; background-color: #b9b9b9; padding: 10px 20px 10px 20px; ">中档题占比</label>
+            <label class="col-sm-1 control-label" style="font-family: 微软雅黑; font-size: 18px; font-weight: 400; background-color: #d3d3d3; padding: 10px 20px 10px 20px; ">0</label>
+            <div class="col-sm-7" style="padding-top: 15px;">
+                <input type="range" id="assemble-hardness-medium" />
+            </div>
+        </div>
+        <div class="col-sm-12"></div>
+        <div class="form-group" style="text-align: center; ">
+            <label class="col-sm-3 control-label" style="font-family: 微软雅黑; font-size: 18px; font-weight: 400; background-color: #b9b9b9; padding: 10px 20px 10px 20px; ">困难题占比</label>
+            <label class="col-sm-1 control-label" style="font-family: 微软雅黑; font-size: 18px; font-weight: 400; background-color: #d3d3d3; padding: 10px 20px 10px 20px; ">0</label>
+            <div class="col-sm-7" style="padding-bottom: 40px; padding-top: 15px;">
+                <input type="range" id="assemble-hardness-hard" />
+            </div>
+        </div>
+    </div>
+        <div class="form-group">
+            <div class="col-sm-offset-7 col-sm-2" style="margin-top: 40px;">
+                <button type="submit" class="button button-flat-primary" style="font-family: 微软雅黑; ">提 交</button>
+            </div>
+            <div class="col-sm-2" style="margin-top: 40px;">
+                <a class="button button-flat-highlight" style="cursor: pointer; font-family: 微软雅黑; ">重 置</a>
+            </div>
         </div>
     }
 </div>
@@ -197,13 +232,13 @@
         $("#assemble-description,#upload-description").hide();
         $("#assemble-extend > img,#upload-extend > img").css("opacity", 0.3);
     }
-</script>
+</script>@*组卷与上传之间的切换*@
 <script type="text/javascript">
     function collapse_Extend1() {
         $("#assemble-knowlwdge-setting").slideToggle(200);
         if ($("#assemble-btn-extend1").html() == "+")
             $("#assemble-btn-extend1").html("-");
-        else 
+        else
             $("#assemble-btn-extend1").html("+");
     }
     function collapse_Extend2() {
@@ -220,7 +255,7 @@
         else
             $("#assemble-btn-extend3").html("+");
     }
-</script>
+</script>@*组卷系统内设置的展开与折叠*@
 <script type="text/javascript">
 
-</script>
+</script>@*考点设置*@

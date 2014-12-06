@@ -125,7 +125,7 @@ namespace AutoPaper.Controllers
             string data="";
             foreach (string upload in Request.Files)
             {
-                
+              
                 Stream fileStream = Request.Files[upload].InputStream;
   //              string mimeType = Request.Files[upload].ContentType;
                 string fileName = Path.GetFileName(Request.Files[upload].FileName);
@@ -134,7 +134,7 @@ namespace AutoPaper.Controllers
                 string path = AppDomain.CurrentDomain.BaseDirectory + "uploads/";
                 //将文件已文件名filename存放在path路径中
                 Request.Files[upload].SaveAs(Path.Combine(path, fileName));
-
+       
                 //从本地读取doc文件
                 StreamReader sr = new StreamReader(path, Encoding.Unicode);
                 data = sr.ReadToEnd();
@@ -149,7 +149,7 @@ namespace AutoPaper.Controllers
             List<question> questionList = new List<question>();
 
      
-            int start=3, end;string p = "<c>";
+            int start=3, end=0;string p = "<c>";
             while (end < data.Length)
             {
                 

@@ -150,7 +150,7 @@ namespace AutoPaper.Controllers
 
      
             int start=3, end;string p = "<c>";
-            while (true)
+            while (end < data.Length)
             {
                 
                 end = KMPMatch(data, p, start);

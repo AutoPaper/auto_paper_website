@@ -21,7 +21,7 @@ namespace AutoPaper.Models
     {
         [Key]
         public int userID { get; set; }
-        public int toID { get; set; }
+        public int fromID { get; set; }
         public string content { get; set; }
     }
     public class follow
@@ -35,8 +35,15 @@ namespace AutoPaper.Models
     }
     public class errorHistory
     {
+        [Key]
+        [Column(Order = 0)]
         public int fromID { get; set; }
+        [Key]
+        [Column(Order = 1)]
         public int toID { get; set; }
+        [Key]
+        [Column(Order = 2)]
+        public int questionID { get; set; }
         public string content { get; set; }
     }
     public class papers

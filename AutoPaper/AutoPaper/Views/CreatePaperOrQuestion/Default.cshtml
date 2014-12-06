@@ -47,7 +47,7 @@
     <div style="width: 300px; height: 75px; background-color: #fccc8a; text-align: center; margin-top: 20px; margin-right: 0px; float: right; ">
         <h2 style="font-family: 微软雅黑; ">上  传  试  卷</h2>
     </div>
-    @using (Ajax.BeginForm("Default", "CreatePaperOrQuestion", new AjaxOptions
+    @using (Ajax.BeginForm("dealwithDoc", "CreatePaperOrQuestion", new AjaxOptions
     {
         HttpMethod = "Post",
         UpdateTargetId = "upload-question",
